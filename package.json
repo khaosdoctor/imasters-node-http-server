@@ -1,0 +1,23 @@
+{
+  "name": "imasters-node-http-server",
+  "version": "1.0.0",
+  "description": "Repositório de exemplo para artigo do iMasters",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "standard -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khaosdoctor/imasters-node-http-server.git"
+  },
+  "author": "Lucas Santos <lhs.santoss@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/khaosdoctor/imasters-node-http-server/issues"
+  },
+  "homepage": "https://github.com/khaosdoctor/imasters-node-http-server#readme",
+  "devDependencies": {
+    "standard": "^10.0.3"
+  }
+}
