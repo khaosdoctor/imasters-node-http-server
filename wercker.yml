@@ -3,33 +3,36 @@ box: node:8.4
 
 # Definição do primeiro step
 build:
-  - npm-install
-  - script:
-    name: gerar tag de imagem
-    code: |
-      export PACKAGE_VERSION=$(node -p "require('./package.json').version")
-      export IMAGE_TAG=$PACKAGE_VERSION
-      echo "$IMAGE_TAG" >> $WERCKER_SOURCE_DIR/.image_tag
+  steps:
+    - npm-install
+    - script:
+      name: gerar tag de imagem
+      code: |
+        export PACKAGE_VERSION=$(node -p "require('./package.json').version")
+        export IMAGE_TAG=$PACKAGE_VERSION
+        echo "$IMAGE_TAG" >> $WERCKER_SOURCE_DIR/.image_tag
 
 # Definição do step de testes
 test:
-  - npm-test
+  steps:
+    - npm-test
 
 # Definição do step de push
 docker-push:
-  - script:
-    name: recupera tag de imagem
-    code: |
-      export IMAGE_TAG=$(cat $WERCKER_SOURCE_DIR/.image_tag)
+  steps:
+    - script:
+      name: recupera tag de imagem
+      code: |
+        export IMAGE_TAG=$(cat $WERCKER_SOURCE_DIR/.image_tag)
 
-  - internal/docker-push:
-      username: $DOCKER_USER
-      password: $DOCKER_PASS
-      repository: $DOCKER_REPO
-      tag: $IMAGE_TAG
-      working-dir: $WERCKER_SOURCE_DIR
-      entrypoint: npm start
-      registry: https://hub.docker.com
+    - internal/docker-push:
+        username: $DOCKER_USER
+        password: $DOCKER_PASS
+        repository: $DOCKER_REPO
+        tag: $IMAGE_TAG
+        working-dir: $WERCKER_SOURCE_DIR
+        entrypoint: npm start
+        registry: https://hub.docker.com
 
 # Definição do step do kubernetes
 deploy:
@@ -38,7 +41,6 @@ deploy:
       name: parsear templates
       code: |
         export IMAGE_TAG=$(cat $WERCKER_SOURCE_DIR/.image_tag)
-
         mv $WERCKER_SOURCE_DIR/kub/kub_*.template $WERCKER_SOURCE_DIR
     
     - bash-template
