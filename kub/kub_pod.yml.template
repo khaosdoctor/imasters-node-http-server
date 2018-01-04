@@ -8,6 +8,6 @@ metadata:
 spec:
   containers:
     - name: ${SERVICE_NAME}
-      image: khaosdoctor/imasters-node-http-server
+      image: khaosdoctor/imasters-node-http-server:${IMAGE_TAG}
       ports:
         - containerPort: ${PORT}
