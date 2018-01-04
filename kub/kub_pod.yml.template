@@ -9,5 +9,8 @@ spec:
   containers:
     - name: ${SERVICE_NAME}
       image: khaosdoctor/imasters-node-http-server:${IMAGE_TAG}
+      env:
+      - name: PORT
+        value: "${PORT}"
       ports:
         - containerPort: ${PORT}
